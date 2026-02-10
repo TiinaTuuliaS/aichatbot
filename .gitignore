@@ -1,0 +1,17 @@
+# Python cache ja temp-tiedostot
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDE:t
+.vscode/
+.idea/
+
+# Salaisuudet
+.env
