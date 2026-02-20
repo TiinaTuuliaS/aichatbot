@@ -133,46 +133,25 @@ if __name__ == "__main__":
 
     custom_css = """
     .app-wrap { 
-        max-width: 980px; 
+        max-width: 1100px; 
         margin: 0 auto; 
-        padding: 18px 18px 28px 18px;
+        padding: 18px;
     }
 
-    .hero {
-        border-radius: 18px;
-        padding: 18px 18px;
-        border: 1px solid rgba(0,0,0,.08);
-        background: rgba(255,255,255,.72);
-        backdrop-filter: blur(6px);
-        margin-bottom: 14px;
-    }
+    .left h1 { margin: 0 0 6px 0; font-size: 26px; line-height: 1.15; }
+    .left p { margin: 0 0 10px 0; opacity: .85; }
 
-    .hero h1 { margin: 0 0 6px 0; font-size: 28px; line-height: 1.2; }
-    .hero p { margin: 0; opacity: .88; }
-
-    .meta {
-        margin-top: 10px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        opacity: .92;
-        font-size: 14px;
-        align-items: center;
-    }
-
-    .pill {
-        border: 1px solid rgba(0,0,0,.10);
+    .link {
+        display: inline-block;
+        margin: 0 0 14px 0;
+        text-decoration: none;
+        border: 1px solid rgba(0,0,0,.12);
         border-radius: 999px;
         padding: 6px 10px;
-        background: rgba(255,255,255,.65);
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        text-decoration: none;
         color: inherit;
     }
 
-    .cards-title { margin: 10px 0 8px 0; font-weight: 600; opacity: .9; }
+    .cards-title { margin: 8px 0 8px 0; font-weight: 600; opacity: .9; }
 
     .qgrid button {
         width: 100%;
@@ -199,72 +178,63 @@ if __name__ == "__main__":
     ]
 
     def send_quick(question, history):
-        # ChatInterface/Chatbot history on Gradio 6.x:ssa yleensä "messages"-muodossa:
-        # [{"role":"user"/"assistant","content":"..."}, ...]
         history = history or []
-
         assistant = me.chat(question, history)
-
         new_history = history + [
             {"role": "user", "content": question},
             {"role": "assistant", "content": assistant},
         ]
-
-        # Päivitä chat + tyhjennä textbox
         return new_history, ""
 
     with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
-        with gr.Column(elem_classes=["app-wrap"]):
-            gr.HTML(
-                """
-                <div class="hero">
-                  <h1>💬 Tiinan CV-chatbot</h1>
-                  <p>Työnantajille: kysy minusta, osaamisestani ja projekteistani. Vastaan CV:n ja profiilitietojen pohjalta.</p>
-                  <div class="meta">
-                    <span class="pill">⚡ Pikakysymykset alla</span>
-                    <a class="pill" href="https://www.linkedin.com/in/tiina-siremaa-7589a61b5/" target="_blank" rel="noopener noreferrer">
+        with gr.Row(elem_classes=["app-wrap"]):
+
+            # VASEN PALSTA: info + napit
+            with gr.Column(scale=2, min_width=360, elem_classes=["left"]):
+                gr.HTML(
+                    """
+                    <h1>💬 Tiinan CV-chatbot</h1>
+                    <p>Työnantajille: kysy minusta, osaamisestani ja projekteistani. Vastaan CV:n ja profiilitietojen pohjalta.</p>
+                    <a class="link" href="https://www.linkedin.com/in/tiina-siremaa-7589a61b5/" target="_blank" rel="noopener noreferrer">
                       🔗 LinkedIn
                     </a>
-                  </div>
-                </div>
-                """
-            )
+                    """
+                )
 
-            gr.Markdown(
-                "**Pikakysymykset (klikkaa → kysymys lähtee suoraan chattiin):**",
-                elem_classes=["cards-title"]
-            )
+                gr.Markdown("**Pikakysymykset:**", elem_classes=["cards-title"])
 
-            with gr.Row(elem_classes=["qgrid"]):
-                with gr.Column():
-                    btns_left = [gr.Button(q) for q in quick_questions[::2]]
-                with gr.Column():
-                    btns_right = [gr.Button(q) for q in quick_questions[1::2]]
+                with gr.Row(elem_classes=["qgrid"]):
+                    with gr.Column():
+                        btns_left = [gr.Button(q) for q in quick_questions[::2]]
+                    with gr.Column():
+                        btns_right = [gr.Button(q) for q in quick_questions[1::2]]
 
-            chat = gr.ChatInterface(
-                fn=me.chat,
-                title=None,
-                description=None,
-                textbox=gr.Textbox(
-                    placeholder="Kirjoita kysymys ja paina Enter…",
-                    autofocus=True,
-                ),
-            )
+                gr.HTML(
+                    """
+                    <div class="footer">
+                      Vinkki: kysy konkreettisesti esim. “mitä teit viime projektissa?” tai “miksi olisit hyvä tähän rooliin?”.
+                    </div>
+                    """
+                )
 
-            # Nappi -> suoraan vastaus chattiin
+            # OIKEA PALSTA: chat
+            with gr.Column(scale=3, min_width=520):
+                chat = gr.ChatInterface(
+                    fn=me.chat,
+                    title=None,
+                    description=None,
+                    textbox=gr.Textbox(
+                        placeholder="Kirjoita kysymys ja paina Enter…",
+                        autofocus=True,
+                    ),
+                )
+
+            # Nappi -> suoraan chattiin
             for b in (btns_left + btns_right):
                 b.click(
                     fn=send_quick,
                     inputs=[b, chat.chatbot],
                     outputs=[chat.chatbot, chat.textbox],
                 )
-
-            gr.HTML(
-                """
-                <div class="footer">
-                  Vinkki: kysy konkreettisesti esim. “mitä teit viime projektissa?” tai “millaista arvoa tuot tiimiin?”.
-                </div>
-                """
-            )
 
     demo.launch()
