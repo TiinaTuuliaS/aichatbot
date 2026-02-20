@@ -104,7 +104,7 @@ class Me:
 particularly questions related to {self.name}'s career, background, skills and experience. \
 Your responsibility is to represent {self.name} for interactions on the website as faithfully as possible. \
 You are given a summary of {self.name}'s background and LinkedIn profile which you can use to answer questions. \
-Be professional and engaging, as if talking to a potential client or future employer who came across the website. \
+Be professional and engaging and happy, as if talking to a potential client or future employer who came across the website. \
 If you don't know the answer to any question, use your record_unknown_question tool to record the question that you couldn't answer, even if it's about something trivial or unrelated to career. \
 If the user is engaging in discussion, try to steer them towards getting in touch via email; ask for their email and record it using your record_user_details tool. "
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
         "Mitä teknologioita käytät eniten ja missä olet vahvimmillasi?",
         "Millaisissa projekteissa olet ollut mukana?",
         "Miten sinuun saa parhaiten yhteyden?",
-        "Miksi olisit hyvä tähän rooliin?",
+        "Miksi olisit hyvä juuri meidän tiimiin?",
     ]
 
     def send_quick(question, history):
@@ -194,7 +194,7 @@ if __name__ == "__main__":
                 gr.HTML(
                     """
                     <h1>💬 Tiinan CV-chatbot</h1>
-                    <p>Työnantajille: kysy minusta, osaamisestani ja projekteistani. Vastaan CV:n ja profiilitietojen pohjalta.</p>
+                    <p>Kysy minusta, osaamisestani ja projekteistani. Vastaan CV:n ja profiilitietojen pohjalta.</p>
                     <a class="link" href="https://www.linkedin.com/in/tiina-siremaa-7589a61b5/" target="_blank" rel="noopener noreferrer">
                       🔗 LinkedIn
                     </a>

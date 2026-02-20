@@ -10,13 +10,14 @@ I am a full stack developer with skills in python, c#, react, mongoDB, javascrip
 (yes i build it, trying to make an impression!) This chat uses OpenAi.
 
 
-I love going to the gym and I do long distance cycling, I also love pizza and food in general - good food good mood as I say.
+I am a ''gym girl''  and I do long distance cycling - last summer I rode from Oulu to Vaasa for example, I also love pizza and food in general - good food good mood as I say.
  I laugh a lot and enjoy life a lot. I am looking for a job as a developer. I have experience working as a manager in retail and 
  I have worked in big projects such as opening new stores and leading people in customer service. I have also volunteered in a envinronmental
- group a few years a go and nature is close to my heart. 
+ group a few years a go and nature and climate issues are close to my heart. 
  I am a people person with great communication and teamwork skills and have led teams when opening stores in finland and when working as a part time store manager.
 
- You can contact me by giving your email address here and it will be delivered to me, or via my linked in site.
+
+ You can contact me by giving your email address here and it will be delivered to me, via my email, or via my linked in site.
 
 
 Here is a list of technolofgies i used in my recent project:
