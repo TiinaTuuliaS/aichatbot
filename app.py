@@ -198,9 +198,20 @@ if __name__ == "__main__":
         "Miksi olisit hyvä tähän rooliin?",
     ]
 
-    def fill_text(question):
-        # Täyttää tekstikentän. Käyttäjä painaa Enter → normaali me.chat()-kutsu.
-        return question
+    def send_quick(question, history):
+        # ChatInterface/Chatbot history on Gradio 6.x:ssa yleensä "messages"-muodossa:
+        # [{"role":"user"/"assistant","content":"..."}, ...]
+        history = history or []
+
+        assistant = me.chat(question, history)
+
+        new_history = history + [
+            {"role": "user", "content": question},
+            {"role": "assistant", "content": assistant},
+        ]
+
+        # Päivitä chat + tyhjennä textbox
+        return new_history, ""
 
     with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
         with gr.Column(elem_classes=["app-wrap"]):
@@ -219,9 +230,11 @@ if __name__ == "__main__":
                 """
             )
 
-            gr.Markdown("**Pikakysymykset (klikkaa → täyttää kentän, paina Enter lähettääksesi):**", elem_classes=["cards-title"])
+            gr.Markdown(
+                "**Pikakysymykset (klikkaa → kysymys lähtee suoraan chattiin):**",
+                elem_classes=["cards-title"]
+            )
 
-            # Tehdään 2-sarakkeinen korttigridi
             with gr.Row(elem_classes=["qgrid"]):
                 with gr.Column():
                     btns_left = [gr.Button(q) for q in quick_questions[::2]]
@@ -238,10 +251,13 @@ if __name__ == "__main__":
                 ),
             )
 
-            # Haetaan ChatInterface:n textbox-komponentti (se on tuo minkä annoit textbox=...)
-            # ja kytketään napit siihen: nappi -> täytä textbox
+            # Nappi -> suoraan vastaus chattiin
             for b in (btns_left + btns_right):
-                b.click(fn=fill_text, inputs=[b], outputs=[chat.textbox])
+                b.click(
+                    fn=send_quick,
+                    inputs=[b, chat.chatbot],
+                    outputs=[chat.chatbot, chat.textbox],
+                )
 
             gr.HTML(
                 """
