@@ -131,12 +131,124 @@ If the user is engaging in discussion, try to steer them towards getting in touc
 if __name__ == "__main__":
     me = Me()
 
-    with gr.Blocks(theme=gr.themes.Soft()) as demo:
-        gr.ChatInterface(
-            fn=me.chat,
-            title="💬 Tiinan ura-chat",
-            description="Kysy Tiinan taustasta, osaamisesta ja projekteista.",
-            textbox=gr.Textbox(placeholder="Kirjoita viesti ja paina Enter…"),
-        )
+    custom_css = """
+    .app-wrap { 
+        max-width: 980px; 
+        margin: 0 auto; 
+        padding: 18px 18px 28px 18px;
+    }
+
+    .hero {
+        border-radius: 18px;
+        padding: 18px 18px;
+        border: 1px solid rgba(0,0,0,.08);
+        background: rgba(255,255,255,.72);
+        backdrop-filter: blur(6px);
+        margin-bottom: 14px;
+    }
+
+    .hero h1 { margin: 0 0 6px 0; font-size: 28px; line-height: 1.2; }
+    .hero p { margin: 0; opacity: .88; }
+
+    .meta {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        opacity: .92;
+        font-size: 14px;
+        align-items: center;
+    }
+
+    .pill {
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: rgba(255,255,255,.65);
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .cards-title { margin: 10px 0 8px 0; font-weight: 600; opacity: .9; }
+
+    .qgrid button {
+        width: 100%;
+        text-align: left;
+        border-radius: 14px !important;
+        padding: 12px 12px !important;
+        border: 1px solid rgba(0,0,0,.10) !important;
+    }
+
+    .footer {
+        margin-top: 10px;
+        opacity: .72;
+        font-size: 12px;
+    }
+    """
+
+    quick_questions = [
+        "Kerro lyhyesti taustastasi ja vahvuuksistasi.",
+        "Minkälaisiin rooleihin haet ja miksi?",
+        "Mitä teknologioita käytät eniten ja missä olet vahvimmillasi?",
+        "Millaisissa projekteissa olet ollut mukana?",
+        "Miten sinuun saa parhaiten yhteyden?",
+        "Miksi olisit hyvä tähän rooliin?",
+    ]
+
+    def fill_text(question):
+        # Täyttää tekstikentän. Käyttäjä painaa Enter → normaali me.chat()-kutsu.
+        return question
+
+    with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
+        with gr.Column(elem_classes=["app-wrap"]):
+            gr.HTML(
+                """
+                <div class="hero">
+                  <h1>💬 Tiinan CV-chatbot</h1>
+                  <p>Työnantajille: kysy minusta, osaamisestani ja projekteistani. Vastaan CV:n ja profiilitietojen pohjalta.</p>
+                  <div class="meta">
+                    <span class="pill">⚡ Pikakysymykset alla</span>
+                    <a class="pill" href="https://www.linkedin.com/in/tiina-siremaa-7589a61b5/" target="_blank" rel="noopener noreferrer">
+                      🔗 LinkedIn
+                    </a>
+                  </div>
+                </div>
+                """
+            )
+
+            gr.Markdown("**Pikakysymykset (klikkaa → täyttää kentän, paina Enter lähettääksesi):**", elem_classes=["cards-title"])
+
+            # Tehdään 2-sarakkeinen korttigridi
+            with gr.Row(elem_classes=["qgrid"]):
+                with gr.Column():
+                    btns_left = [gr.Button(q) for q in quick_questions[::2]]
+                with gr.Column():
+                    btns_right = [gr.Button(q) for q in quick_questions[1::2]]
+
+            chat = gr.ChatInterface(
+                fn=me.chat,
+                title=None,
+                description=None,
+                textbox=gr.Textbox(
+                    placeholder="Kirjoita kysymys ja paina Enter…",
+                    autofocus=True,
+                ),
+            )
+
+            # Haetaan ChatInterface:n textbox-komponentti (se on tuo minkä annoit textbox=...)
+            # ja kytketään napit siihen: nappi -> täytä textbox
+            for b in (btns_left + btns_right):
+                b.click(fn=fill_text, inputs=[b], outputs=[chat.textbox])
+
+            gr.HTML(
+                """
+                <div class="footer">
+                  Vinkki: kysy konkreettisesti esim. “mitä teit viime projektissa?” tai “millaista arvoa tuot tiimiin?”.
+                </div>
+                """
+            )
 
     demo.launch()
