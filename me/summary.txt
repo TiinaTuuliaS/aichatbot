@@ -1,4 +1,5 @@
-My name is Tiina, I am originally from Lahti, Finland but I moved to Tampere about 8 years ago to work as a visual merchandizer. 
+My name is Tiina, I am originally from Lahti, Finland but I moved to Tampere about 9 years ago to work as a visual merchandizer. 
+
 Now I work as a part time visual merchandizer and a sales advisor
 in Stockmann - i call that my side hustle, since I mainly develop now and I am really into AI and loking for a job or self employment in this field.
 
@@ -9,9 +10,54 @@ I am a full stack developer with skills in python, c#, react, mongoDB, javascrip
 (yes i build it, trying to make an impression!) This chat uses OpenAi.
 
 
-I love going to the gym and I do long distance cycling, I also love pizza and food in general.
+I love going to the gym and I do long distance cycling, I also love pizza and food in general - good food good mood as I say.
  I laugh a lot and enjoy life a lot. I am looking for a job as a developer. I have experience working as a manager in retail and 
- I have worked in big projects such as opening new stores and leading people in customer service. 
- I am a people person with great communication and teamwork skills and have led teams when opening stores in finland.
+ I have worked in big projects such as opening new stores and leading people in customer service. I have also volunteered in a envinronmental
+ group a few years a go and nature is close to my heart. 
+ I am a people person with great communication and teamwork skills and have led teams when opening stores in finland and when working as a part time store manager.
 
  You can contact me by giving your email address here and it will be delivered to me, or via my linked in site.
+
+
+Here is a list of technolofgies i used in my recent project:
+
+### Backend
+
+| Teknologia        | Käyttötarkoitus |
+|-------------------|-----------------|
+| **Express**       | HTTP-palvelimen ja REST API -reittien toteutus |
+| **Mongoose**      | MongoDB-tietokannan käyttö ja skeemat |
+| **JWT (jsonwebtoken)** | Käyttäjien autentikointi ja token-pohjainen kirjautuminen |
+| **bcryptjs**      | Salasanojen salaus ja vertailu |
+| **Cookie-parser** | Evästeiden käsittely Expressissä |
+| **dotenv**        | Ympäristömuuttujien hallinta `.env`-tiedostosta |
+| **Cloudinary**    | Kuvien tallennus ja hallinta pilvipalvelussa |
+| **Stripe**        | Maksujen käsittely |
+| **ioredis**       | Redis-tietokannan käyttö (välimuisti, sessiot, jonot) |
+| **Axios**         | HTTP-kutsut muihin palveluihin tarvittaessa |
+| **Nodemon** (dev) | Kehitystyökalu, joka käynnistää serverin automaattisesti uudelleen koodin muuttuessa |
+
+
+### Frontend
+
+| Teknologia             | Käyttötarkoitus |
+|------------------------|-----------------|
+| **React**              | Käyttöliittymän rakentaminen |
+| **React DOM**          | React-komponenttien renderöinti selaimeen |
+| **React Router DOM**   | Sivunavigointi (reititys) |
+| **Zustand**            | Sovelluksen tilanhallinta |
+| **Framer Motion**      | Animaatioiden toteutus |
+| **React Confetti**     | Konfetti-efektit (esim. onnistumisilmoituksissa) |
+| **Lucide React**       | Ikonikirjasto |
+| **Axios**              | API- ja HTTP-kutsujen tekeminen |
+| **@stripe/stripe-js**  | Stripe-maksujen integrointi |
+| **Recharts**           | Kaavioiden ja graafien visualisointi |
+| **Tailwind CSS**       | Tyylittely (CSS-kehys) |
+| **PostCSS + Autoprefixer** | CSS:n käsittely ja selainyhteensopivuus |
+| **Vite**               | Kehitys- ja build-työkalu |
+| **@vitejs/plugin-react** | React-tuki Viteen |
+| **ESLint**             | Koodin laadun ja virheiden tarkistus |
+| **eslint-plugin-react-hooks** | React hooks -käytön tarkistus |
+| **eslint-plugin-react-refresh** | HMR (Hot Module Reload) -tuki Reactille |
+| **@eslint/js, globals** | ESLintin lisäkonfiguraatiot |
+| **@types/react, @types/react-dom** | TypeScript-tyypitykset Reactille (autocompletion/editorituki) |
