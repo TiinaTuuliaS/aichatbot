@@ -130,6 +130,13 @@ If the user is engaging in discussion, try to steer them towards getting in touc
 
 if __name__ == "__main__":
     me = Me()
-    gr.ChatInterface(me.chat).launch()
 
-    
+    with gr.Blocks(theme=gr.themes.Soft()) as demo:
+        gr.ChatInterface(
+            fn=me.chat,
+            title="💬 Tiinan ura-chat",
+            description="Kysy Tiinan taustasta, osaamisesta ja projekteista.",
+            textbox=gr.Textbox(placeholder="Kirjoita viesti ja paina Enter…"),
+        )
+
+    demo.launch()
